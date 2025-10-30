@@ -203,14 +203,14 @@ period = st.sidebar.selectbox("Data Period", ["6mo", "1y"], index=1)
 run_button = st.sidebar.button("Run Portfolio Optimization")
 
 if run_button:
-    with st.spinner("Fetching and validating tickers..."):
+    with st.spinner("Fetching and validating stocks..."):
         TICKERS_ALL = get_nifty500_tickers()
         VALID_TICKERS = validate_tickers_yahoo(TICKERS_ALL)
         if len(VALID_TICKERS) == 0:
             VALID_TICKERS = ["RELIANCE.NS","TCS.NS","INFY.NS","HDFCBANK.NS","ICICIBANK.NS","SBIN.NS","ITC.NS","BHARTIARTL.NS","KOTAKBANK.NS","LT.NS","HINDUNILVR.NS","AXISBANK.NS","BAJFINANCE.NS","ASIANPAINT.NS","MARUTI.NS","SUNPHARMA.NS","ULTRACEMCO.NS","WIPRO.NS","TITAN.NS","HCLTECH.NS"]
             st.warning("Using fallback tickers.")
 
-    with st.spinner("Training models on sample data..."):
+    with st.spinner("Training models on fetched stocks..."):
         sample = VALID_TICKERS[:min(100, len(VALID_TICKERS))]
         sample_data, _ = fetch_price_data(sample, period=period)
         sample_df, _ = build_feature_rows_from_price_data(sample_data)
@@ -301,3 +301,4 @@ if run_button:
 
 else:
     st.write("Enter inputs and click 'Run Portfolio Optimization' to start.")
+
